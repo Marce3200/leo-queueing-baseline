@@ -1,0 +1,4 @@
+satelites,recurso_critico,demanda_enlace_s,lambda_saturacion,mensajes_dia_saturacion,lambda_cruce_plazo,mensajes_dia_cruce_plazo
+1,EnlaceSubida,162.11,0.006169,533,0.005613,485
+4,EnlaceSubida,40.53,0.024674,2132,0.024119,2084
+12,EnlaceSubida,13.51,0.074023,6396,0.073467,6348

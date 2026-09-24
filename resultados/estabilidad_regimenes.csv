@@ -1,0 +1,10 @@
+satelites,regimen,lambda,utilizacion_enlace,residencia_enlace_s,dentro_de_plazo,estable
+1,normal,0.002315,0.3753,259.5,si,si
+1,emergencia,0.006944,1.1258,inf,no,no
+1,desastre,0.018519,3.0021,inf,no,no
+4,normal,0.002315,0.0938,44.7,si,si
+4,emergencia,0.006944,0.2814,56.4,si,si
+4,desastre,0.018519,0.7505,162.5,si,si
+12,normal,0.002315,0.0313,13.9,si,si
+12,emergencia,0.006944,0.0938,14.9,si,si
+12,desastre,0.018519,0.2502,18.0,si,si
