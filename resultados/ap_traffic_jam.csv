@@ -1,0 +1,4 @@
+regimen,tasa_mensajes_hora,respaldo_hueco_medio,respaldo_hueco_maximo,capacidad_ventana_media,razon_respaldo_capacidad,hueco_critico_h,excede_con_un_satelite
+normal,8.3,56,97,156,0.62,18.8,no
+emergencia,25.0,168,290,156,1.85,6.3,si
+desastre,66.7,447,773,156,4.95,2.3,si

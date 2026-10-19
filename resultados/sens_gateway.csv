@@ -1,0 +1,3 @@
+posicion,saltos_medios,demanda_mesh_s,utilizacion_mesh_desastre,limite_saltos_por_defecto_suficiente,periodo_sondeo_critico_s
+centro,1.8,0.592,0.0110,si,17.9
+esquina,3.5,1.150,0.0213,no,35.3

@@ -1,0 +1,13 @@
+saltos_medios,satelites,demanda_mesh_s,demanda_enlace_s,razon_enlace_mesh,recurso_critico,utilizacion_mesh_desastre
+1.5,1,0.493,162.11,328.8,EnlaceSubida,0.0091
+1.5,12,0.493,13.51,27.4,EnlaceSubida,0.0091
+1.8,1,0.592,162.11,274.0,EnlaceSubida,0.0110
+1.8,12,0.592,13.51,22.8,EnlaceSubida,0.0110
+2.5,1,0.822,162.11,197.3,EnlaceSubida,0.0152
+2.5,12,0.822,13.51,16.4,EnlaceSubida,0.0152
+3.5,1,1.150,162.11,140.9,EnlaceSubida,0.0213
+3.5,12,1.150,13.51,11.7,EnlaceSubida,0.0213
+4.5,1,1.479,162.11,109.6,EnlaceSubida,0.0274
+4.5,12,1.479,13.51,9.1,EnlaceSubida,0.0274
+6.0,1,1.972,162.11,82.2,EnlaceSubida,0.0365
+6.0,12,1.972,13.51,6.8,EnlaceSubida,0.0365

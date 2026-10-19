@@ -1,0 +1,5 @@
+satelites,demanda_enlace_s,transmisiones_para_cruce,maximo_fisico_nodos,factor_sobre_maximo,alcanzable
+1,162.11,493,30,16.44,no
+4,40.53,123,30,4.11,no
+12,13.51,41,30,1.37,no
+17,9.54,29,30,0.97,si
