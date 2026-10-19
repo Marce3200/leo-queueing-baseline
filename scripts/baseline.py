@@ -38,11 +38,12 @@ REGIMENES = {               # mensajes por segundo
 
 CONSTELACIONES = [1, 4, 12]
 
-# Puntos de control obtenidos en JMVA para N = 1 (validacion cruzada)
+# Puntos de control obtenidos en JMVA (validacion cruzada)
 JMVA_REFERENCIA = [
-    # lambda, utilizacion, tiempo de residencia (s), numero de mensajes
-    (0.0005, 0.081, 176.0, None),
-    (0.0060, 0.973, 5929.407, 35.576),
+    # satelites, lambda, utilizacion, tiempo de residencia (s), numero de mensajes
+    (1, 0.0005, 0.081, 176.0, None),
+    (1, 0.0060, 0.973, 5929.407, 35.576),
+    (4, 0.0240, 0.973, 1485.704, 35.657),
 ]
 
 TOLERANCIA = 0.05  # 5 % de error relativo admitido
@@ -131,8 +132,8 @@ def cruce_plazo(n_satelites):
 
 def validar():
     filas = []
-    for lmbda, u_ref, r_ref, n_ref in JMVA_REFERENCIA:
-        calc = resolver(lmbda, 1)["EnlaceSubida"]
+    for n_sat, lmbda, u_ref, r_ref, n_ref in JMVA_REFERENCIA:
+        calc = resolver(lmbda, n_sat)["EnlaceSubida"]
         for metrica, ref, val in (
             ("Utilizacion", u_ref, calc["utilizacion"]),
             ("Tiempo de residencia (s)", r_ref, calc["residencia"]),
@@ -142,6 +143,7 @@ def validar():
                 continue
             err = abs(val - ref) / ref
             filas.append({
+                "satelites": n_sat,
                 "lambda": f"{lmbda:.5f}",
                 "metrica": metrica,
                 "jmva": f"{ref:.4f}",
@@ -196,11 +198,11 @@ def main():
     # 1. Planilla de validacion
     filas = validar()
     escribir_csv(os.path.join(DIR_RESULTADOS, "validacion_jmva.csv"), filas,
-                 ["lambda", "metrica", "jmva", "python", "error_relativo",
-                  "dentro_tolerancia"])
+                 ["satelites", "lambda", "metrica", "jmva", "python",
+                  "error_relativo", "dentro_tolerancia"])
     print("Validacion contra JMVA")
     for f in filas:
-        print(f"  lambda={f['lambda']}  {f['metrica']:<26} "
+        print(f"  N={f['satelites']:>2}  lambda={f['lambda']}  {f['metrica']:<26} "
               f"JMVA={f['jmva']:>10}  Python={f['python']:>10}  "
               f"err={f['error_relativo']}  {f['dentro_tolerancia']}")
 

@@ -1,6 +1,9 @@
-lambda,metrica,jmva,python,error_relativo,dentro_tolerancia
-0.00050,Utilizacion,0.0810,0.0811,0.00070,si
-0.00050,Tiempo de residencia (s),176.0000,176.4120,0.00234,si
-0.00600,Utilizacion,0.9730,0.9727,0.00033,si
-0.00600,Tiempo de residencia (s),5929.4070,5932.9897,0.00060,si
-0.00600,Numero de mensajes,35.5760,35.5979,0.00062,si
+satelites,lambda,metrica,jmva,python,error_relativo,dentro_tolerancia
+1,0.00050,Utilizacion,0.0810,0.0811,0.00070,si
+1,0.00050,Tiempo de residencia (s),176.0000,176.4120,0.00234,si
+1,0.00600,Utilizacion,0.9730,0.9727,0.00033,si
+1,0.00600,Tiempo de residencia (s),5929.4070,5932.9897,0.00060,si
+1,0.00600,Numero de mensajes,35.5760,35.5979,0.00062,si
+4,0.02400,Utilizacion,0.9730,0.9727,0.00033,si
+4,0.02400,Tiempo de residencia (s),1485.7040,1483.2474,0.00165,si
+4,0.02400,Numero de mensajes,35.6570,35.5979,0.00166,si
