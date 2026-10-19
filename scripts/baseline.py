@@ -11,6 +11,7 @@ Uso:
 
 import csv
 import os
+import xml.etree.ElementTree as ET
 
 import matplotlib
 matplotlib.use("Agg")
@@ -38,19 +39,29 @@ REGIMENES = {               # mensajes por segundo
 
 CONSTELACIONES = [1, 4, 12]
 
-# Puntos de control obtenidos en JMVA (validacion cruzada)
-JMVA_REFERENCIA = [
-    # satelites, lambda, utilizacion, tiempo de residencia (s), numero de mensajes
-    (1, 0.0005, 0.081, 176.0, None),
-    (1, 0.0060, 0.973, 5929.407, 35.576),
-    (4, 0.0240, 0.973, 1485.704, 35.657),
+# Puntos de control obtenidos en JMVA (validacion cruzada).
+# Version anterior, con valores copiados a mano desde la interfaz de JMVA:
+# JMVA_REFERENCIA = [
+#     # satelites, lambda, utilizacion, tiempo de residencia (s), numero de mensajes
+#     (1, 0.0005, 0.081, 176.0, None),
+#     (1, 0.0060, 0.973, 5929.407, 35.576),
+#     (4, 0.0240, 0.973, 1485.704, 35.657),
+# ]
+# Ahora los valores se leen de los modelos resueltos en modelos/*.jmva.
+PUNTOS_CONTROL = [
+    # satelites, lambda, archivo del modelo JMVA
+    (1, 0.0005, "baseline_N1.jmva"),
+    (1, 0.0060, "baseline_N1.jmva"),
+    (4, 0.0240, "baseline_N4.jmva"),
 ]
+ESTACION_VALIDADA = "EnlaceSubida"
 
 TOLERANCIA = 0.05  # 5 % de error relativo admitido
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DIR_FIGURAS = os.path.join(RAIZ, "figuras")
 DIR_RESULTADOS = os.path.join(RAIZ, "resultados")
+DIR_MODELOS = os.path.join(RAIZ, "modelos")
 
 
 # --------------------------------------------------------------------------
@@ -130,9 +141,31 @@ def cruce_plazo(n_satelites):
 # Validacion cruzada contra JMVA
 # --------------------------------------------------------------------------
 
+def leer_jmva(archivo, lmbda, estacion=ESTACION_VALIDADA):
+    """Solucion guardada por JMVA para una tasa de llegada del barrido what-if.
+
+    Devuelve (utilizacion, tiempo de residencia, numero de mensajes) de la
+    estacion indicada. Falla si el modelo no fue resuelto en esa tasa.
+    """
+    raiz = ET.parse(os.path.join(DIR_MODELOS, archivo)).getroot()
+    for sol in raiz.iter("solutions"):
+        if abs(float(sol.get("iterationValue")) - lmbda) > 1e-9:
+            continue
+        for est in sol.iter("stationresults"):
+            if est.get("station") != estacion:
+                continue
+            m = {x.get("measureType"): float(x.get("meanValue"))
+                 for x in est.iter("measure")}
+            return (m["Utilization"], m["Residence time"],
+                    m["Number of Customers"])
+    raise ValueError(f"{archivo}: sin solucion para lambda={lmbda} en {estacion}")
+
+
 def validar():
     filas = []
-    for n_sat, lmbda, u_ref, r_ref, n_ref in JMVA_REFERENCIA:
+    # for n_sat, lmbda, u_ref, r_ref, n_ref in JMVA_REFERENCIA:
+    for n_sat, lmbda, archivo in PUNTOS_CONTROL:
+        u_ref, r_ref, n_ref = leer_jmva(archivo, lmbda)
         calc = resolver(lmbda, n_sat)["EnlaceSubida"]
         for metrica, ref, val in (
             ("Utilizacion", u_ref, calc["utilizacion"]),
@@ -146,8 +179,10 @@ def validar():
                 "satelites": n_sat,
                 "lambda": f"{lmbda:.5f}",
                 "metrica": metrica,
-                "jmva": f"{ref:.4f}",
-                "python": f"{val:.4f}",
+                # "jmva": f"{ref:.4f}",
+                "jmva": f"{ref:.6f}",
+                # "python": f"{val:.4f}",
+                "python": f"{val:.6f}",
                 "error_relativo": f"{err:.5f}",
                 "dentro_tolerancia": "si" if err <= TOLERANCIA else "NO",
             })
